@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://mbostock.github.com/d3/d3.js"></script>
+	<script src="https://d3js.org/d3.v5.js"></script>
+	
+	<title>Voronoi</title>
+</head>
+<body>
+	<div id="chart"></div>
+	<aside style="position: absolute; top: 0; right: 0;">
+		<div class="form-group">
+			<label for="r">Radius:</label>
+			<input type="range" class="form-control" id="r" />
+		</div>
+		<h4 style>Data:</h4>
+		<div id="data">
+		
+		</div>
+	<script src="voronoi.js"></script>
+	<script>
+		const size = 900;
+		// latidtude and logitude range of the data
+		const range = [-6, 2, 49, 56];
+		
+		var v;
+		
+		// Dataset from: http://media.nhschoices.nhs.uk/data/foi/Hospital.csv (https://data.gov.uk/dataset/f4420d1c-043a-42bc-afbc-4c0f7d3f1620/hospitals)
+		// License: Open Government License (http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
+		d3.text('Hospital.csv').then(function (text) {
+			// Select the latitude and longitude columns from the data
+			const vertices = Voronoi.getVertices(text, '~', '\n', 15, 14, 10 ** -250, true).map(function (d) {
+				// Convert the lat/long values into pixel coordinates, this is just a linear interpolation
+				return [size * (d[0] - range[0]) / (range[1] - range[0]),
+					size * (1 - (d[1] - range[2]) / (range[3] - range[2])),
+					d[2]];
+			});
+		
+			v = new Voronoi('chart', size, size, vertices);
+		
+			v.radius = 30;
+			v.colour = d3.rgb(200, 200, 200);
+			v.colourHover = d3.rgb(50, 100, 200);
+			v.opacity = 0.5;
+			v.stroke = d3.rgb(150, 150, 150);
+		
+			v.pointRadius = 1.5;
+			v.pointColour = d3.rgb(50, 50, 50);
+			v.pointColourHover = d3.rgb(100, 150, 200);
+		
+			const data = document.querySelector('#data');
+			v.onHover = function (d) {
+				const lines = [];
+				for (const p of d) {
+					lines.push("<p style='margin: 0'>" + p + '</p>');
+				}
+				data.innerHTML = lines.join('');
+			};
+		
+			const scale = 4;
+			const rSlider = document.querySelector('#r');
+			rSlider.min = 1;
+			rSlider.max = (size / 2) ** (1 / scale);
+			rSlider.step = 0.5 ** scale;
+			rSlider.value = v.radius ** (1 / scale);
+			rSlider.oninput = function () { v.radius = this.value ** scale; };
+		});
+  </script>
+</body>
+</html>
