@@ -1,0 +1,27 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+}
+
+aside {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 500px;
+    height: 100%;
+    padding: 10px;
+    overflow: hidden;
+    background-color: #8e908c;
+}
+
+aside label {
+    font-weight: bold;
+}
+
+aside input {
+    width: 100%;
+}
+
+aside p {
+    margin: 0;
+}

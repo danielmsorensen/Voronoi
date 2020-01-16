@@ -99,7 +99,7 @@ class Voronoi {
 				const geom = d3.geom.voronoi(t._v.map(d => d.slice(0, 2)));
 				const d = [];
 				for (let i = 0; i < geom.length; i += 1) {
-					d.push([geom[i], t._v[i][2]]);
+					d.push([geom[i], t._v[i].length > 2 ? t._v[i][2] : null]);
 				}
 				return d;
 			}())
@@ -148,12 +148,12 @@ class Voronoi {
 	 * Select an array of vertices from a string in DSV format
 	 * @static
 	 * @param {string} text - The data in DSV format.
-	 * @param {string} [columnSep=","] - The delimeter that seperates columns in text.
-	 * @param {string} [lineSep="\n"] - The newline character that seperates the rows in text.
+	 * @param {string} [columnSep=","] - The delimiter that separates columns in text.
+	 * @param {string} [lineSep="\n"] - The newline character that separates the rows in text.
 	 * @param {number} [xColumn=0] - The column position for the x-axis of the vertices.
 	 * @param {number} [yColumn=1] - The column position for the y-axis of the vertices.
 	 * @param {number} [overlap=0] - The minimum distance squared between 2 points before they are merged.
-	 * @param {bool} [addData=false] - Whether or not to include the other data along with the vertex coordinates.
+	 * @param {boolean} [addData=false] - Whether or not to include the other data along with the vertex coordinates.
 	 * @returns {Object[]} An array of vertices selected from text.
 	 * @example
 	 * let text = "0,0;1,1;2,4;3,9;4,16;5,25";
@@ -197,7 +197,7 @@ class Voronoi {
 	}
 
 	/**
-	 * The ID of the HTML element that the chart is indside.
+	 * The ID of the HTML element that the chart is inside.
 	 * @type {string}
 	 */
 	get chartId () {
