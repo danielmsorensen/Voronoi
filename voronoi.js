@@ -344,7 +344,7 @@ class Voronoi {
 
 	/**
 	 * Callback function that is called when the mouse hovers over a region.
-	 * @type {Voronoi~vertexCallback}
+	 * @type {function}
 	 */
 	get onHover () {
 		return this._oh;
@@ -353,10 +353,4 @@ class Voronoi {
 	set onHover (oh) {
 		this._oh = oh;
 	}
-
-	/**
-	 * Function that returns the data of a vertex.
-	 * @callback Voronoi~vertexCallback
-	 * @param {Object[]} d - An array containing the data of a vertex.
-	 */
 }

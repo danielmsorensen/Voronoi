@@ -54,21 +54,21 @@
 			v.pointColourHover = d3.rgb(100, 150, 200);
 
 			v.onHover = function (d) {
-				d3.select("#data")
-					.html("")
-					.selectAll("p")
+				d3.select('#data')
+					.html('')
+					.selectAll('p')
 						.data(d)
-						.enter().append("p")
+						.enter().append('p')
 							.html((d, i) => d);
 			};
 		
 			scale = 4;
-			d3.select("#r")
-				.attr("min", 1)
-				.attr("max", (size / 2) ** (1 / scale))
-				.attr("step", 0.1 ** scale)
-				.attr("value", v.radius ** (1 / scale))
-				.attr("oninput", "v.radius = this.value ** scale");
+			d3.select('#r')
+				.attr('min', 1)
+				.attr('max', (size / 2) ** (1 / scale))
+				.attr('step', 0.1 ** scale)
+				.attr('value', v.radius ** (1 / scale))
+				.attr('oninput', 'v.radius = this.value ** scale');
 		});
   </script>
 </body>
